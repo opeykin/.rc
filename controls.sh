@@ -4,10 +4,35 @@ alias gc='xclip -selection clipboard -o'
 
 alias gdb='gdb --silent'
 
-up() { local p= i=${1:-1}; while (( i-- )); do p+=../; done; cd "$p[" && pwd; }
+up () { local p= i=${1:-1}; while (( i-- )); do p+=../; done; cd "$p[" && pwd; }
 md () { mkdir -p "$@" && cd "$@"; }
 
 alias set-ttl="sudo iptables -t mangle -A POSTROUTING -o wlan0 -j TTL --ttl-set 65"
 alias list-iptables-rules="sudo iptables -t mangle -L POSTROUTING -v"
 
+function ssh ()
+{
+ /usr/bin/ssh -t $@ "tmux attach -d || tmux new";
+}
 
+function mosh ()
+{
+ /usr/local/bin/mosh -6 $@ -- tmux attach -d
+}
+
+
+LAST_FIND_RESULTS=/tmp/last_find_results
+LAST_FIND_ERRORS=/tmp/last_find_errors
+
+function f()
+{
+ find . -name $1 2>$LAST_FIND_ERRORS | tee $LAST_FIND_RESULTS | grep $1 --color=always
+}
+
+function fa()
+{
+ find . -name '*'$1'*' 2>$LAST_FIND_ERRORS | tee $LAST_FIND_RESULTS | grep $1 --color=always
+}
+
+alias lfr="cat $LAST_FIND_RESULTS"
+alias lfe="cat $LAST_FIND_ERRORS"
