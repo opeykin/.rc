@@ -2,7 +2,6 @@ bind '"\eu":"cd ..\C-m"'
 alias sc='xclip -selection c'
 alias gc='xclip -selection clipboard -o'
 
-alias ls='ls --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
